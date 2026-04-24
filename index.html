@@ -3,175 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UI Design System · Accessible Component Showcase</title>
+    <title>Modern UI System · Accessible Component Showcase</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ----- Design Tokens ----- */
         :root {
-            --bg: #ffffff;
-            --surface: #f8fafc;
+            --bg: #f8fafc;
+            --surface: #ffffff;
             --text: #0f172a;
             --text-secondary: #475569;
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --success: #16a34a;
-            --warning: #d97706;
-            --error: #dc2626;
-            --info: #2563eb;
             --border: #e2e8f0;
-            --focus-ring: rgba(37, 99, 235, 0.4);
-            --radius: 0.5rem;
-            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.05);
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-light: rgba(99, 102, 241, 0.08);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #3b82f6;
+            --radius-sm: 0.5rem;
+            --radius: 0.75rem;
+            --radius-lg: 1rem;
+            --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-lg: 0 12px 24px -8px rgba(0,0,0,0.08);
+            --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .dark {
-            --bg: #0f172a;
+            --bg: #0b1121;
             --surface: #1e293b;
             --text: #f1f5f9;
             --text-secondary: #94a3b8;
             --border: #334155;
-            --focus-ring: rgba(59, 130, 246, 0.5);
+            --primary-light: rgba(99, 102, 241, 0.12);
+            --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
+            --shadow-lg: 0 12px 24px rgba(0,0,0,0.4);
         }
+
         * { margin:0; padding:0; box-sizing:border-box; }
+
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.5;
-            transition: background 0.2s, color 0.2s;
+            transition: background var(--transition), color var(--transition);
+            overflow-x: hidden;
         }
-        .container { max-width: 1200px; margin:0 auto; padding: 2rem 1.5rem; }
-        h1 { font-size: 2.5rem; margin-bottom:0.5rem; }
-        .subtitle { color: var(--text-secondary); margin-bottom: 2.5rem; }
-        .section { margin-bottom: 3rem; }
-        .section h2 { font-size: 1.6rem; margin-bottom: 1.2rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--border); }
 
-        /* Grid for component lists */
-        .flex-group { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; }
+        .container { max-width: 1280px; margin:0 auto; padding: 2rem 2rem 4rem; }
+
+        h1 {
+            font-size: 2.8rem; font-weight: 800; letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--primary) 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 3rem; }
+
+        .section { margin-bottom: 3.5rem; }
+        .section h2 {
+            font-size: 1.4rem; font-weight: 700; margin-bottom: 1.2rem;
+            display: flex; align-items: center; gap: 0.5rem;
+            color: var(--text);
+        }
+
+        /* Grid helpers */
+        .flex-group { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; }
         .flex-group.center { align-items: center; }
 
-        /* Buttons */
+        /* ----- Buttons ----- */
         .btn {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.6rem 1.2rem;
-            border: 2px solid transparent;
-            border-radius: var(--radius);
-            font-weight: 600; font-size: 0.9rem; cursor: pointer;
-            text-decoration: none; transition: all 0.15s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.6rem 1.2rem; border-radius: var(--radius); font-weight: 600;
+            font-size: 0.875rem; cursor: pointer; text-decoration: none;
+            transition: all var(--transition); border: 1px solid transparent;
             background: var(--primary); color: white;
+            box-shadow: 0 2px 6px rgba(99,102,241,0.25);
         }
-        .btn:hover { background: var(--primary-hover); }
-        .btn:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
-        .btn-outline { background: transparent; border-color: var(--primary); color: var(--primary); }
-        .btn-outline:hover { background: var(--primary); color: white; }
-        .btn-ghost { background: transparent; color: var(--primary); }
-        .btn-ghost:hover { background: rgba(37,99,235,0.1); }
-        .btn-danger { background: var(--error); }
-        .btn-danger:hover { background: #b91c1c; }
-        .btn-success { background: var(--success); }
-        .btn-success:hover { background: #15803d; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
-        .btn-lg { padding: 0.8rem 1.6rem; font-size: 1.1rem; }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99,102,241,0.35); }
+        .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+        .btn-outline { background: transparent; border-color: var(--primary); color: var(--primary); box-shadow: none; }
+        .btn-outline:hover { background: var(--primary-light); color: var(--primary); transform: translateY(-1px); }
+
+        .btn-ghost { background: transparent; color: var(--primary); box-shadow: none; }
+        .btn-ghost:hover { background: var(--primary-light); }
+
+        .btn-danger { background: var(--error); box-shadow: 0 2px 6px rgba(239,68,68,0.25); }
+        .btn-danger:hover { background: #dc2626; }
+
+        .btn-success { background: var(--success); box-shadow: 0 2px 6px rgba(16,185,129,0.25); }
+        .btn-success:hover { background: #059669; }
+
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .btn-sm { padding: 0.4rem 0.9rem; font-size: 0.8rem; border-radius: var(--radius-sm); }
+        .btn-lg { padding: 0.8rem 1.8rem; font-size: 1rem; border-radius: var(--radius-lg); }
         .btn-icon { padding: 0.5rem; border-radius: 50%; aspect-ratio: 1; }
 
-        /* Cards */
+        /* ----- Cards ----- */
         .card {
             background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow);
+            border-radius: var(--radius-lg); padding: 1.5rem;
+            box-shadow: var(--shadow); transition: box-shadow var(--transition), transform var(--transition);
         }
-        .card-hover:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); transition: all 0.2s; }
+        .card-hover:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 
-        /* Badges */
+        /* ----- Badges ----- */
         .badge {
-            display: inline-block; padding: 0.15rem 0.6rem; border-radius: 9999px;
-            font-size: 0.75rem; font-weight: 600; background: var(--primary); color: white;
+            display: inline-flex; align-items: center; padding: 0.2em 0.7em;
+            border-radius: 9999px; font-size: 0.75rem; font-weight: 600;
+            background: var(--primary-light); color: var(--primary);
         }
         .badge-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
-        .badge-success { background: var(--success); }
-        .badge-warning { background: var(--warning); }
-        .badge-error { background: var(--error); }
+        .badge-success { background: rgba(16,185,129,0.12); color: var(--success); }
+        .badge-warning { background: rgba(245,158,11,0.12); color: var(--warning); }
+        .badge-error { background: rgba(239,68,68,0.12); color: var(--error); }
 
-        /* Alerts */
+        /* ----- Alerts ----- */
         .alert {
             padding: 1rem; border-radius: var(--radius); border-left: 4px solid;
-            background: var(--surface); margin-bottom: 1rem;
+            background: var(--surface); box-shadow: var(--shadow); margin-bottom: 1rem;
+            display: flex; align-items: flex-start; gap: 0.75rem;
+        }
+        .alert::before {
+            font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 1.1rem;
+            margin-top: 0.1rem;
         }
         .alert-success { border-color: var(--success); }
+        .alert-success::before { content: "\f058"; color: var(--success); }
         .alert-warning { border-color: var(--warning); }
+        .alert-warning::before { content: "\f071"; color: var(--warning); }
         .alert-error { border-color: var(--error); }
+        .alert-error::before { content: "\f057"; color: var(--error); }
         .alert-info { border-color: var(--info); }
+        .alert-info::before { content: "\f05a"; color: var(--info); }
 
-        /* Form elements */
-        .form-group { margin-bottom: 1rem; }
-        label { display: block; font-weight: 600; margin-bottom: 0.3rem; font-size: 0.9rem; }
+        /* ----- Forms ----- */
+        .form-group { margin-bottom: 1.2rem; }
+        label { display: block; font-weight: 600; margin-bottom: 0.35rem; font-size: 0.9rem; color: var(--text); }
         input[type="text"], input[type="email"], input[type="password"], input[type="number"],
         textarea, select, input[type="date"] {
-            width: 100%; padding: 0.6rem; border: 1px solid var(--border);
+            width: 100%; padding: 0.65rem 0.9rem; border: 1px solid var(--border);
             border-radius: var(--radius); background: var(--bg); color: var(--text);
-            font-size: 0.9rem;
+            font-size: 0.9rem; transition: border var(--transition), box-shadow var(--transition);
+            outline: none;
         }
         input:focus, textarea:focus, select:focus {
-            outline: 3px solid var(--focus-ring); outline-offset: 2px; border-color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
         }
+
         .checkbox-group, .radio-group { display: flex; align-items: center; gap: 0.5rem; }
         .toggle-switch {
-            width: 36px; height: 20px; background: #cbd5e1; border-radius: 10px;
-            position: relative; transition: background 0.2s; cursor: pointer;
+            width: 38px; height: 22px; background: #cbd5e1; border-radius: 11px;
+            position: relative; transition: background var(--transition); cursor: pointer;
         }
         .toggle-switch::after {
-            content: ''; width: 16px; height: 16px; background: white; border-radius: 50%;
-            position: absolute; top: 2px; left: 2px; transition: transform 0.2s;
+            content: ''; width: 18px; height: 18px; background: white; border-radius: 50%;
+            position: absolute; top: 2px; left: 2px; transition: transform var(--transition);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
         }
         input[type="checkbox"]:checked + .toggle-switch { background: var(--primary); }
         input[type="checkbox"]:checked + .toggle-switch::after { transform: translateX(16px); }
-        .file-upload { display: flex; align-items: center; gap: 0.5rem; }
+
+        .file-upload { display: flex; align-items: center; gap: 0.75rem; }
         .file-upload input[type="file"] { display: none; }
-        .file-upload label { margin: 0; cursor: pointer; }
+        .file-upload label { margin: 0; }
+
         .range-slider { width: 100%; accent-color: var(--primary); }
 
-        /* Tabs */
-        .tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 1rem; }
-        .tab { padding: 0.6rem 1.2rem; cursor: pointer; font-weight: 500; color: var(--text-secondary); border-bottom: 2px solid transparent; margin-bottom: -2px; }
-        .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+        /* ----- Tabs (animated underline) ----- */
+        .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; gap: 0; }
+        .tab {
+            padding: 0.8rem 1.4rem; cursor: pointer; font-weight: 500;
+            color: var(--text-secondary); position: relative;
+            transition: color var(--transition); white-space: nowrap;
+        }
+        .tab::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; width: 100%;
+            height: 2px; background: var(--primary); transform: scaleX(0);
+            transition: transform var(--transition);
+        }
+        .tab.active { color: var(--primary); }
+        .tab.active::after { transform: scaleX(1); }
         .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Accordion */
-        .accordion-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 0.5rem; }
-        .accordion-header { padding: 0.8rem 1rem; background: var(--surface); cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
-        .accordion-header:hover { background: var(--border); }
-        .accordion-content { padding: 0 1rem 1rem; display: none; }
+        /* ----- Accordion ----- */
+        .accordion-item {
+            border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 0.6rem;
+            overflow: hidden; background: var(--surface);
+        }
+        .accordion-header {
+            padding: 0.9rem 1.2rem; cursor: pointer; display: flex;
+            justify-content: space-between; align-items: center; font-weight: 600;
+            transition: background var(--transition);
+        }
+        .accordion-header:hover { background: var(--primary-light); }
+        .accordion-content { padding: 0 1.2rem 1.2rem; display: none; color: var(--text-secondary); line-height: 1.6; }
         .accordion-content.open { display: block; }
 
-        /* Progress bar */
-        .progress { height: 12px; background: var(--border); border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--primary); width: 65%; border-radius: 10px; transition: width 0.3s; }
+        /* ----- Progress ----- */
+        .progress {
+            height: 10px; background: var(--border); border-radius: 10px; overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, var(--primary), #a855f7);
+            border-radius: 10px; width: 65%; transition: width 0.4s ease;
+        }
 
-        /* Modal */
+        /* ----- Modal ----- */
         .modal-overlay {
             display: none; position: fixed; inset:0; background: rgba(0,0,0,0.5);
-            align-items: center; justify-content: center; z-index: 1000;
+            backdrop-filter: blur(6px); align-items: center; justify-content: center;
+            z-index: 1000; padding: 1rem;
         }
         .modal-overlay.open { display: flex; }
         .modal {
-            background: var(--bg); border-radius: var(--radius); padding: 2rem;
-            max-width: 500px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: var(--surface); border-radius: var(--radius-lg); padding: 2rem;
+            max-width: 480px; width: 100%; box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
         }
 
-        /* Theme toggle button */
+        /* ----- Theme Toggle (floating) ----- */
         .theme-toggle {
-            position: fixed; top: 20px; right: 20px;
+            position: fixed; bottom: 2rem; right: 2rem;
             background: var(--surface); border: 1px solid var(--border);
-            border-radius: 50%; width: 44px; height: 44px;
+            border-radius: 50%; width: 52px; height: 52px;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 1.3rem; box-shadow: var(--shadow);
-            color: var(--text); z-index: 999;
+            cursor: pointer; font-size: 1.4rem; box-shadow: var(--shadow-md);
+            color: var(--text); z-index: 999; transition: transform var(--transition);
         }
+        .theme-toggle:hover { transform: scale(1.08); }
 
-        /* Responsive */
-        @media (max-width: 600px) {
+        /* ----- Mobile ----- */
+        @media (max-width: 640px) {
             .container { padding: 1.5rem 1rem; }
-            h1 { font-size: 2rem; }
+            h1 { font-size: 2.2rem; }
+            .flex-group { gap: 0.5rem; }
         }
     </style>
 </head>
@@ -181,24 +257,24 @@
     </button>
 
     <div class="container">
-        <h1>🧰 Design System Showcase</h1>
-        <p class="subtitle">Accessible, responsive UI component library built with semantic HTML and modern CSS. WCAG 2.1 AA compliant.</p>
+        <h1>✦ Modern UI System</h1>
+        <p class="subtitle">A production‑ready, accessible component library built with contemporary design language and WCAG 2.1 AA compliance.</p>
 
         <!-- Typography -->
         <div class="section">
-            <h2>Typography</h2>
-            <h1>Heading 1</h1>
-            <h2>Heading 2</h2>
-            <h3>Heading 3</h3>
-            <p>Body text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <small>Small text / captions</small>
+            <h2><i class="fa-solid fa-font"></i> Typography</h2>
+            <h1 style="font-size:2.2rem; -webkit-text-fill-color: var(--text); background: none; margin-bottom:0.2rem;">Heading 1</h1>
+            <h2 style="font-size:1.6rem; margin-bottom:0.2rem;">Heading 2</h2>
+            <h3 style="font-size:1.3rem; margin-bottom:0.2rem;">Heading 3</h3>
+            <p>Body text. Clean, readable, and designed for clarity.</p>
+            <small style="color:var(--text-secondary)">Small text / captions</small>
         </div>
 
         <!-- Buttons -->
         <div class="section">
-            <h2>Buttons</h2>
+            <h2><i class="fa-solid fa-square"></i> Buttons</h2>
             <div class="flex-group">
-                <button class="btn">Primary</button>
+                <button class="btn"><i class="fa-solid fa-rocket"></i> Primary</button>
                 <button class="btn btn-outline">Outline</button>
                 <button class="btn btn-ghost">Ghost</button>
                 <button class="btn btn-danger">Danger</button>
@@ -213,21 +289,21 @@
 
         <!-- Cards -->
         <div class="section">
-            <h2>Cards</h2>
-            <div class="flex-group">
-                <div class="card" style="width: 250px;">
-                    <h3>Basic Card</h3>
-                    <p>Content goes here. This card uses the default style.</p>
+            <h2><i class="fa-solid fa-window-maximize"></i> Cards</h2>
+            <div class="flex-group" style="gap:1.5rem;">
+                <div class="card" style="width: 260px;">
+                    <h3 style="margin-bottom:0.6rem; font-size:1.1rem;">Default Card</h3>
+                    <p style="color:var(--text-secondary); font-size:0.9rem;">Subtle shadow and border, ready for any content.</p>
                 </div>
-                <div class="card card-hover" style="width: 250px;">
-                    <h3>Hover Card</h3>
-                    <p>Hover me – I lift up.</p>
+                <div class="card card-hover" style="width: 260px;">
+                    <h3 style="margin-bottom:0.6rem; font-size:1.1rem;">Hover Card</h3>
+                    <p style="color:var(--text-secondary); font-size:0.9rem;">I lift on hover – perfect for interactivity.</p>
                 </div>
-                <div class="card" style="width: 250px;">
-                    <h3>With Footer</h3>
-                    <p>Some content</p>
-                    <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border);">
-                        <button class="btn btn-sm">Action</button>
+                <div class="card" style="width: 260px;">
+                    <h3 style="margin-bottom:0.6rem; font-size:1.1rem;">With Footer</h3>
+                    <p style="color:var(--text-secondary); font-size:0.9rem;">A little description.</p>
+                    <div style="margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid var(--border);">
+                        <button class="btn btn-sm btn-outline">Action</button>
                     </div>
                 </div>
             </div>
@@ -235,7 +311,7 @@
 
         <!-- Badges -->
         <div class="section">
-            <h2>Badges & Tags</h2>
+            <h2><i class="fa-solid fa-tag"></i> Badges</h2>
             <div class="flex-group center">
                 <span class="badge">Default</span>
                 <span class="badge badge-outline">Outline</span>
@@ -247,24 +323,24 @@
 
         <!-- Alerts -->
         <div class="section">
-            <h2>Alerts</h2>
-            <div class="alert alert-success">✅ Success: Your changes have been saved.</div>
-            <div class="alert alert-warning">⚠️ Warning: Your storage is almost full.</div>
-            <div class="alert alert-error">❌ Error: Something went wrong.</div>
-            <div class="alert alert-info">ℹ️ Info: New update available.</div>
+            <h2><i class="fa-solid fa-circle-exclamation"></i> Alerts</h2>
+            <div class="alert alert-success">Your changes have been saved successfully.</div>
+            <div class="alert alert-warning">Storage almost full. Consider upgrading.</div>
+            <div class="alert alert-error">Something went wrong. Please try again.</div>
+            <div class="alert alert-info">A new version is available.</div>
         </div>
 
         <!-- Forms -->
         <div class="section">
-            <h2>Form Elements</h2>
-            <div class="card" style="max-width: 500px;">
+            <h2><i class="fa-solid fa-input-pipe"></i> Form Elements</h2>
+            <div class="card" style="max-width: 560px;">
                 <div class="form-group">
                     <label for="fullname">Full Name</label>
-                    <input type="text" id="fullname" placeholder="John Doe">
+                    <input type="text" id="fullname" placeholder="Alex Johnson">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="john@example.com">
+                    <input type="email" id="email" placeholder="alex@example.com">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
@@ -279,7 +355,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="birthdate">Date of Birth</label>
+                    <label for="birthdate">Birth Date</label>
                     <input type="date" id="birthdate">
                 </div>
                 <div class="form-group">
@@ -295,21 +371,21 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label>Enable notifications</label>
+                    <label>Notifications</label>
                     <label class="checkbox-group" style="cursor:pointer;">
-                        <input type="checkbox" class="sr-only"> <span class="toggle-switch"></span>
+                        <input type="checkbox" class="sr-only" checked> <span class="toggle-switch"></span>
                     </label>
                 </div>
                 <div class="form-group">
                     <label>Volume</label>
-                    <input type="range" class="range-slider" min="0" max="100" value="70">
+                    <input type="range" class="range-slider" min="0" max="100" value="75">
                 </div>
                 <div class="form-group">
-                    <label>Upload Profile Picture</label>
+                    <label>Avatar</label>
                     <div class="file-upload">
-                        <label class="btn btn-outline btn-sm" for="profilePic">Choose File</label>
-                        <span>No file chosen</span>
-                        <input type="file" id="profilePic">
+                        <label class="btn btn-outline btn-sm" for="avatar">Choose File</label>
+                        <span style="color:var(--text-secondary);">No file selected</span>
+                        <input type="file" id="avatar">
                     </div>
                 </div>
                 <div class="form-group">
@@ -322,59 +398,62 @@
 
         <!-- Tabs -->
         <div class="section">
-            <h2>Tabs</h2>
+            <h2><i class="fa-solid fa-folder"></i> Tabs</h2>
             <div class="tabs" id="tabsContainer">
-                <div class="tab active" data-tab="tab1">Tab 1</div>
-                <div class="tab" data-tab="tab2">Tab 2</div>
+                <div class="tab active" data-tab="tab1">Overview</div>
+                <div class="tab" data-tab="tab2">Settings</div>
             </div>
             <div class="tab-content active" id="tab1">
-                <div class="card"><p>Content for Tab 1 – fully accessible with keyboard navigation.</p></div>
+                <div class="card"><p>Here's the overview content. Clean, readable, and beautifully spaced.</p></div>
             </div>
             <div class="tab-content" id="tab2">
-                <div class="card"><p>Content for Tab 2 – you can add any HTML here.</p></div>
+                <div class="card"><p>Settings panel – you can place any form or text here.</p></div>
             </div>
         </div>
 
         <!-- Accordion -->
         <div class="section">
-            <h2>Accordion</h2>
+            <h2><i class="fa-solid fa-chevron-down"></i> Accordion</h2>
             <div class="accordion-item">
-                <div class="accordion-header"><span>What is this design system?</span> <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="accordion-content"><p>A reusable component library built for accessibility and speed.</p></div>
+                <div class="accordion-header"><span>What is this system?</span> <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="accordion-content"><p>A lightweight, modern design system built with HTML/CSS/JS. Focus on accessibility and speed.</p></div>
             </div>
             <div class="accordion-item">
-                <div class="accordion-header"><span>How do I use it?</span> <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="accordion-content"><p>Copy the HTML/CSS, customize the design tokens, and integrate into your project.</p></div>
+                <div class="accordion-header"><span>How can I integrate it?</span> <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="accordion-content"><p>Copy the CSS and HTML patterns, adapt the tokens, and drop it into any project.</p></div>
             </div>
         </div>
 
-        <!-- Progress Bar -->
+        <!-- Progress -->
         <div class="section">
-            <h2>Progress</h2>
+            <h2><i class="fa-solid fa-bars-progress"></i> Progress</h2>
             <div class="progress"><div class="progress-fill"></div></div>
-            <p style="margin-top:0.5rem;">65% complete</p>
+            <p style="margin-top:0.6rem; font-weight:500;">65% complete</p>
         </div>
 
         <!-- Modal -->
         <div class="section">
-            <h2>Modal</h2>
+            <h2><i class="fa-solid fa-window-restore"></i> Modal</h2>
             <button class="btn" id="openModal">Open Modal</button>
             <div class="modal-overlay" id="modalOverlay">
                 <div class="modal">
-                    <h3>Accessible Modal</h3>
-                    <p style="color:var(--text-secondary); margin:1rem 0;">Focus is trapped. Press Esc or click outside to close.</p>
-                    <button class="btn" id="closeModal">Close</button>
+                    <h3 style="margin-bottom:1rem;">Accessible Modal</h3>
+                    <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Focus is trapped. Press <kbd>Esc</kbd> or click outside to close.</p>
+                    <div style="display:flex; gap:0.75rem; justify-content:flex-end;">
+                        <button class="btn btn-ghost" id="closeModal">Cancel</button>
+                        <button class="btn" id="confirmModal">Confirm</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <p style="text-align:center; margin-top:3rem; color:var(--text-secondary);">
-            🎨 <strong>WCAG 2.1 AA Compliant</strong> · Dark/Light Mode · Mobile‑First · Vanilla HTML/CSS/JS
+        <p style="text-align:center; margin-top:4rem; color:var(--text-secondary); font-size:0.95rem;">
+            🎨 <strong>WCAG 2.1 AA Compliant</strong> · Dark/Light Mode · Mobile‑First · Pure HTML/CSS/JS
         </p>
     </div>
 
     <script>
-        // Theme toggle
+        // Theme
         const html = document.documentElement;
         const themeToggle = document.getElementById('themeToggle');
         const icon = themeToggle.querySelector('i');
@@ -392,12 +471,12 @@
         const modalOverlay = document.getElementById('modalOverlay');
         document.getElementById('openModal').addEventListener('click', () => modalOverlay.classList.add('open'));
         document.getElementById('closeModal').addEventListener('click', () => modalOverlay.classList.remove('open'));
+        document.getElementById('confirmModal')?.addEventListener('click', () => modalOverlay.classList.remove('open'));
         modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) modalOverlay.classList.remove('open'); });
         window.addEventListener('keydown', (e) => { if(e.key === 'Escape' && modalOverlay.classList.contains('open')) modalOverlay.classList.remove('open'); });
 
         // Tabs
-        const tabs = document.querySelectorAll('.tab');
-        tabs.forEach(tab => {
+        document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 const tabId = tab.dataset.tab;
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
